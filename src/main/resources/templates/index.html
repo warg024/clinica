@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Dental "K-ries"</title>
+    <!-- Enlace al archivo CSS externo mediante Thymeleaf -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<!-- Menú de navegación común -->
+<header class="navbar">
+    <a class="logo" th:href="@{/}">🦷 Clínica Dental "K-ries"</a>
+    <nav class="navbar-links">
+        <a th:href="@{/pacientes}">Pacientes</a>
+        <a th:href="@{/tratamientos}">Tratamientos</a>
+        <a th:href="@{/citas}">Citas</a>
+        <a th:href="@{/calendario}">Calendario</a>
+    </nav>
+</header>
+
+<!-- Contenido principal -->
+<main class="contenedor-tabla">
+    <h1>Gestión Dental</h1>
+    <p class="subtitulo-seccion">Selecciona un módulo para gestionar los datos de la clínica:</p>
+
+    <div class="dashboard-grid">
+        <!-- Módulo Pacientes -->
+        <div class="card-modulo">
+            <div>
+                <h2>👤 Pacientes</h2>
+                <p>Alta de nuevos pacientes, fichas personales y contactos.</p>
+                <span class="badge badge-confirmada" th:text="${totalPacientes + ' registrados'}">0 registrados</span>
+            </div>
+            <a th:href="@{/pacientes}" class="btn-acceso">Ir a Pacientes →</a>
+        </div>
+
+        <!-- Módulo Tratamientos -->
+        <div class="card-modulo">
+            <div>
+                <h2>🩺 Tratamientos</h2>
+                <p>Catálogo de intervenciones, tarifas y tiempos clínicos.</p>
+                <span class="badge badge-confirmada" th:text="${totalTratamientos + ' disponibles'}">0 disponibles</span>
+            </div>
+            <a th:href="@{/tratamientos}" class="btn-acceso">Ir a Tratamientos →</a>
+        </div>
+
+        <!-- Módulo Citas -->
+        <div class="card-modulo">
+            <div>
+                <h2>📅 Agenda de Citas</h2>
+                <p>Planificación de consultas médicas asociando pacientes y tratamientos.</p>
+            </div>
+            <a th:href="@{/citas}" class="btn-acceso">Ir a Citas →</a>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

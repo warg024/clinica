@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Paciente - Clínica Dental</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a class="logo" th:href="@{/}">🦷 Clínica Dental "K-ries"</a>
+    <nav class="navbar-links">
+        <a th:href="@{/pacientes}" class="active">Pacientes</a>
+        <a th:href="@{/tratamientos}">Tratamientos</a>
+        <a th:href="@{/citas}">Citas</a>
+        <a th:href="@{/calendario}">Calendario</a>
+    </nav>
+</header>
+
+<div class="contenedor-form">
+    <h1>Alta de Paciente</h1>
+
+    <form th:action="@{/pacientes/guardar}"
+          th:object="${paciente}"
+          method="post"
+          class="form-grid">
+
+        <!-- Campo oculto para JPA (UPDATE / INSERT) -->
+        <input type="hidden" th:field="*{id}">
+
+        <div class="campo-form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" required>
+        </div>
+
+        <div class="campo-form">
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos" th:field="*{apellidos}" required>
+        </div>
+
+        <div class="campo-form">
+            <label for="dni">DNI:</label>
+            <input type="text" id="dni" th:field="*{dni}" maxlength="10" required>
+        </div>
+
+        <div class="campo-ancho-completo">
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" th:field="*{direccion}">
+        </div>
+
+        <div class="campo-form">
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" th:field="*{edad}" min="0" max="120" required>
+        </div>
+
+        <div class="campo-form">
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" th:field="*{sexo}">
+                <option value="">-- Seleccionar --</option>
+                <option value="HOMBRE">Hombre</option>
+                <option value="MUJER">Mujer</option>
+                <option value="NOBINARIE">No Binarie</option>
+            </select>
+        </div>
+
+        <div class="campo-form">
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" th:field="*{telefono}">
+        </div>
+
+        <div class="campo-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}">
+        </div>
+
+        <div class="campo-ancho-completo">
+            <label for="tipo">Tipo de paciente:</label>
+            <select id="tipo" th:field="*{tipo}">
+                <option value="">-- Seleccionar --</option>
+                <option value="ADULTO">Adulto</option>
+                <option value="INFANTIL">Infantil</option>
+                <option value="URGENCIAS">Urgencias</option>
+            </select>
+        </div>
+
+        <div class="campo-ancho-completo">
+            <button type="submit">Guardar Paciente</button>
+        </div>
+    </form>
+
+    <a th:href="@{/pacientes}" class="btn-volver">← Volver al listado</a>
+</div>
+
+</body>
+</html>

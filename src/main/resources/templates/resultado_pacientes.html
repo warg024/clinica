@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados de pacientes</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a class="logo" th:href="@{/}">🦷 Clínica Dental "K-ries"</a>
+    <nav class="navbar-links">
+        <a th:href="@{/pacientes}" class="active">Pacientes</a>
+        <a th:href="@{/tratamientos}">Tratamientos</a>
+        <a th:href="@{/citas}">Citas</a>
+        <a th:href="@{/calendario}">Calendario</a>
+    </nav>
+</header>
+
+<div class="contenedor-tabla">
+    <h1>Resultados de la búsqueda</h1>
+
+    <p style="margin-bottom: 12px;">
+        DNI buscado:
+        <strong th:text="${dniBuscado}"></strong>
+    </p>
+
+    <!-- Si existen pacientes, mostrar la tabla -->
+    <div th:if="${not #lists.isEmpty(pacientes)}">
+        <p style="margin-bottom: 16px;">
+            Pacientes encontrados:
+            <span th:text="${#lists.size(pacientes)}"></span>
+        </p>
+
+        <table class="tabla-pacientes">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Teléfono</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="paciente : ${pacientes}">
+                <td th:text="${paciente.id}"></td>
+                <td th:text="${paciente.nombre}"></td>
+                <td th:text="${paciente.apellidos}"></td>
+                <td th:text="${paciente.dni}"></td>
+                <td th:text="${paciente.telefono}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Si no existen pacientes -->
+    <div th:if="${#lists.isEmpty(pacientes)}">
+        <p class="mensaje" style="background: white; padding: 20px; border-radius: 8px; text-align: center; color: #6b7280;">
+            No se han encontrado pacientes.
+        </p>
+    </div>
+
+    <br>
+
+    <a th:href="@{/pacientes/buscar}" class="btn-volver">
+        ← Volver a buscar
+    </a>
+</div>
+
+</body>
+</html>

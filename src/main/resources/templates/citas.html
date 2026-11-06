@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agenda de Citas - Clínica Dental</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a class="logo" th:href="@{/}">🦷 Clínica Dental "K-ries"</a>
+    <nav class="navbar-links">
+        <a th:href="@{/pacientes}">Pacientes</a>
+        <a th:href="@{/tratamientos}">Tratamientos</a>
+        <a th:href="@{/citas}" class="active">Citas</a>
+    </nav>
+</header>
+
+<main class="contenedor-tabla">
+    <h1>Agenda de Citas Médicas</h1>
+
+    <div th:if="${mensajeExito != null}" class="alerta-exito" th:text="${mensajeExito}"></div>
+
+    <a th:href="@{/citas/nuevo}" class="btn-nuevo">➕ Programar Cita</a>
+
+    <table class="tabla-pacientes">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha y Hora</th>
+            <th>Estado</th>
+            <th>Paciente</th>
+            <th>Tratamiento</th>
+            <th>Motivo</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${citas}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${#temporals.format(c.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+            <td>
+                        <span th:classappend="'badge badge-' + ${#strings.toLowerCase(c.estado)}"
+                              th:text="${c.estado}">
+                        </span>
+            </td>
+            <!-- Acceso a la entidad relacionada Paciente -->
+            <td th:text="${c.paciente != null ? (c.paciente.nombre + ' ' + c.paciente.apellidos) : 'Sin asignar'}"></td>
+            <!-- Acceso a la entidad relacionada Tratamiento -->
+            <td th:text="${c.tratamiento?.nombre != null ? c.tratamiento.nombre : 'Sin asignar'}"></td>
+            <td th:text="${c.motivo}"></td>
+            <td style="white-space: nowrap;">
+                <a th:href="@{/citas/editar/{id}(id=${c.id})}" class="btn-accion">✏️ Editar</a>
+
+                <form th:action="@{/citas/eliminar/{id}(id=${c.id})}" method="post" style="display:inline; background:none; padding:0; box-shadow:none;">
+                    <button type="submit" class="btn-eliminar" onclick="return confirm('¿Seguro que deseas anular esta cita?');">
+                        🗑️ Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+</body>
+</html>

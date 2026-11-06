@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar pacientes</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a class="logo" th:href="@{/}">🦷 Clínica Dental "K-ries"</a>
+    <nav class="navbar-links">
+        <a th:href="@{/pacientes}" class="active">Pacientes</a>
+        <a th:href="@{/tratamientos}">Tratamientos</a>
+        <a th:href="@{/citas}">Citas</a>
+        <a th:href="@{/calendario}">Calendario</a>
+    </nav>
+</header>
+
+<div class="contenedor-form">
+    <h1>Buscar pacientes</h1>
+
+    <form th:action="@{/pacientes/resultados}" method="get">
+        <label for="dni">
+            Introduce el DNI completo o una parte:
+        </label>
+
+        <input type="text"
+               id="dni"
+               name="dni"
+               placeholder="Ejemplo: 1234"
+               required>
+
+        <button type="submit">
+            Buscar
+        </button>
+    </form>
+
+    <a th:href="@{/pacientes}" class="btn-volver">← Volver al listado</a>
+</div>
+
+</body>
+</html>

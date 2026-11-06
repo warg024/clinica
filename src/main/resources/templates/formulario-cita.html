@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Cita - Clínica Dental</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a class="logo" th:href="@{/}">🦷 Clínica Dental "K-ries"</a>
+    <nav class="navbar-links">
+        <a th:href="@{/pacientes}">Pacientes</a>
+        <a th:href="@{/tratamientos}">Tratamientos</a>
+        <a th:href="@{/citas}" class="active">Citas</a>
+        <a th:href="@{/calendario}">Calendario</a>
+    </nav>
+</header>
+
+<div class="contenedor-form">
+    <h1>Programar Nueva Cita</h1>
+
+    <form th:action="@{/citas/guardar}" th:object="${cita}" method="post" class="form-grid">
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="campo-form">
+            <label for="paciente">Paciente:</label>
+            <select id="paciente" th:field="*{paciente.id}" required>
+                <option value="">-- Seleccionar Paciente --</option>
+                <option th:each="p : ${pacientes}"
+                        th:value="${p.id}"
+                        th:text="${p.nombre + ' ' + p.apellidos + ' (' + p.telefono + ')'}">
+                </option>
+            </select>
+        </div>
+
+        <div class="campo-form">
+            <label for="tratamiento">Tratamiento:</label>
+            <select id="tratamiento" th:field="*{tratamiento.id}" required>
+                <option value="">-- Seleccionar Tratamiento --</option>
+                <option th:each="t : ${tratamientos}"
+                        th:value="${t.id}"
+                        th:text="${t.nombre + ' - ' + t.precio + ' €'}">
+                </option>
+            </select>
+        </div>
+
+        <div class="campo-form">
+            <label for="fecha">Fecha y Hora:</label>
+            <input type="datetime-local" id="fecha" th:field="*{fecha}" required>
+        </div>
+
+        <div class="campo-form">
+            <label for="duracion">Duración estimada (min):</label>
+            <input type="number" id="duracion" th:field="*{duracion}" min="5" placeholder="30">
+        </div>
+
+        <div class="campo-ancho-completo">
+            <label for="estado">Estado de la cita:</label>
+            <select id="estado" th:field="*{estado}" required>
+                <option th:each="est : ${T(com.archilla.clinicadental.entity.EstadoCita).values()}"
+                        th:value="${est}"
+                        th:text="${est}">
+                </option>
+            </select>
+        </div>
+
+        <div class="campo-ancho-completo">
+            <label for="motivo">Motivo de la consulta:</label>
+            <textarea id="motivo" th:field="*{motivo}" rows="2" maxlength="180" required placeholder="Dolor, revisión de rutina, colocación de férula..."></textarea>
+        </div>
+
+        <div class="campo-ancho-completo">
+            <button type="submit">Confirmar y Guardar Cita</button>
+        </div>
+    </form>
+
+    <a th:href="@{/citas}" class="btn-volver">← Volver a la agenda</a>
+</div>
+
+</body>
+</html>

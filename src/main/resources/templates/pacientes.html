@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacientes - Clínica Dental</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<!-- Menú de navegación común -->
+<header class="navbar">
+    <a class="logo" th:href="@{/}">🦷 Clínica Dental "K-ries"</a>
+    <nav class="navbar-links">
+        <a th:href="@{/pacientes}" class="active">Pacientes</a>
+        <a th:href="@{/tratamientos}">Tratamientos</a>
+        <a th:href="@{/citas}">Citas</a>
+        <a th:href="@{/calendario}">Calendario</a>
+    </nav>
+</header>
+
+<main class="contenedor-tabla">
+    <h1>Listado de Pacientes</h1>
+
+    <!-- Mensaje flash de guardado/borrado -->
+    <div th:if="${mensajeExito != null}" class="alerta-exito" th:text="${mensajeExito}"></div>
+
+    <a th:href="@{/pacientes/nuevo}" class="btn-nuevo">➕ Nuevo Paciente</a>
+    <a th:href="@{/pacientes/buscar}" class="btn-nuevo" style="background-color: #2563eb; margin-left: 8px;">🔍 Buscar por DNI</a>
+
+    <!-- Si no hay pacientes -->
+    <div th:if="${#lists.isEmpty(pacientes)}" style="background: white; padding: 20px; border-radius: 8px; text-align: center; color: #6b7280;">
+        No hay pacientes registrados todavía en la base de datos.
+    </div>
+
+    <!-- Tabla de pacientes -->
+    <table class="tabla-pacientes" th:unless="${#lists.isEmpty(pacientes)}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>DNI</th>
+            <th>Edad</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${pacientes}">
+            <td th:text="${p.id}"></td>
+            <td><strong th:text="${p.nombre}"></strong></td>
+            <td th:text="${p.apellidos}"></td>
+            <td th:text="${p.dni}"></td>
+            <td th:text="${p.edad != null ? p.edad + ' años' : '-'}"></td>
+            <td th:text="${p.telefono}"></td>
+            <td th:text="${p.email}"></td>
+            <td style="white-space: nowrap;">
+                <a th:href="@{/pacientes/editar/{id}(id=${p.id})}" class="btn-accion">✏️ Editar</a>
+
+                <form th:action="@{/pacientes/eliminar/{id}(id=${p.id})}" method="post" style="display:inline; background:none; padding:0; box-shadow:none;">
+                    <button type="submit" class="btn-eliminar" onclick="return confirm('¿Seguro que deseas eliminar este paciente?');">
+                        🗑️ Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+</body>
+</html>
